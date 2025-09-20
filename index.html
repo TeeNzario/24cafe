@@ -458,7 +458,7 @@
         <!-- Header - Fixed -->
         <div class="flex-shrink-0 p-4 sm:p-6 border-b border-secondary-100">
           <div class="flex items-center justify-between">
-            <h2 class="text-lg sm:text-xl font-medium text-secondary-900">ตะกร้าสินค้า</h2>
+            <h2 class="text-lg sm:text-xl font-medium text-secondary-900">ถุงสินค้า</h2>
             <button
               onclick="closeCart()"
               class="text-secondary-400 hover:text-secondary-600 transition-colors p-1"
@@ -485,7 +485,7 @@
           <!-- Cart items will be rendered here -->
           <div class="text-center text-secondary-500 py-8">
             <div class="text-4xl mb-2">🛒</div>
-            <p>ตะกร้าสินค้าว่าง</p>
+            <p>ถุงสินค้าว่าง</p>
           </div>
         </div>
 
@@ -696,7 +696,7 @@
                <div class="flex items-center gap-1 sm:gap-2 md:gap-1">
                  <button class="flex-1 px-2 sm:px-4 md:px-2 py-1.5 sm:py-2.5 md:py-1.5 rounded-xl sm:rounded-2xl md:rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 active:scale-[.98] transition-all font-medium text-xs sm:text-sm md:text-xs" onclick="addToCart('${
                    item.id
-                 }')">เพิ่มลงตะกร้า</button>
+                 }')">เพิ่มลงถุง</button>
                  <button class="px-2 sm:px-4 md:px-2 py-1.5 sm:py-2.5 md:py-1.5 rounded-xl sm:rounded-2xl md:rounded-xl border border-secondary-200 hover:bg-secondary-50 text-secondary-700 transition-all font-medium text-xs sm:text-sm md:text-xs" onclick="view('${
                    item.id
                  }')">ดู</button>
@@ -768,7 +768,7 @@
         }
 
         updateCartUI();
-        showToast(`เพิ่ม "${item.name}" ลงตะกร้าแล้ว`);
+        showToast(`เพิ่ม "${item.name}" ลงถุงแล้ว`);
       }
 
       function removeFromCart(id) {
@@ -814,8 +814,8 @@
                          <path d="M6 7h12l-1 12H7L6 7z"/>
                          <path d="M9 7V6a3 3 0 0 1 6 0v1"/>
                      </svg>
-                     <p class="text-lg font-medium">ตะกร้าว่างเปล่า</p>
-                     <p class="text-sm">เพิ่มสินค้าลงตะกร้าเพื่อเริ่มสั่งซื้อ</p>
+                     <p class="text-lg font-medium">ถุงว่างเปล่า</p>
+                     <p class="text-sm">เพิ่มสินค้าลงถุงเพื่อเริ่มสั่งซื้อ</p>
                  </div>
              `;
           return;
@@ -945,7 +945,7 @@
 
       function confirmOrder() {
         if (cart.length === 0) {
-          showToast("ตะกร้าว่างเปล่า");
+          showToast("ถุงว่างเปล่า");
           return;
         }
 
