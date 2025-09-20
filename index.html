@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>24 Café Day&Night</title>
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- App Config: Tailwind custom theme (optional) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#FFF8E8",
+                100: "#FFF0D1",
+                200: "#FFE1A3",
+                300: "#FFD275",
+                400: "#FFC347",
+                500: "#D49B3A",
+                600: "#B8842E",
+                700: "#9C6D22",
+                800: "#805616",
+                900: "#643F0A",
+              },
+              secondary: {
+                50: "#F5F1ED",
+                100: "#EBE3DB",
+                200: "#D7C7B7",
+                300: "#C3AB93",
+                400: "#AF8F6F",
+                500: "#865544",
+                600: "#6B4336",
+                700: "#503128",
+                800: "#351F1A",
+                900: "#1A0D0C",
+              },
+            },
+            boxShadow: {
+              card: "0 4px 20px rgba(134, 85, 68, 0.08)",
+              "card-hover": "0 8px 32px rgba(134, 85, 68, 0.12)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Custom Theme */
+      /* style.css */
+      @font-face {
+        font-family: "DM Jacaranda"; /* ตั้งชื่อเองได้ */
+        src: url("fonts/DM\ Jacaranda\ Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "DM Jacaranda", sans-serif;
+        background: #fff8e8;
+        min-height: 100vh;
+      }
+
+      /* Image skeleton with new colors */
+      .img-skeleton {
+        background: linear-gradient(90deg, #f5f1ed, #fff0d1, #f5f1ed);
+        background-size: 200% 100%;
+        animation: s 1.2s infinite linear;
+      }
+      @keyframes s {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* Minimal card with new styling */
+      .minimal-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+      }
+      .minimal-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(134, 85, 68, 0.15);
+      }
+
+      /* Falling Leaves Animation */
+      .falling-leaf {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(45deg, #865544, #6b4336);
+        border-radius: 50% 0;
+        opacity: 0.7;
+        z-index: 1;
+        pointer-events: none;
+        animation: leaf-fall 8s infinite linear;
+      }
+
+      .falling-leaf:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+        animation-duration: 8s;
+      }
+      .falling-leaf:nth-child(2) {
+        left: 20%;
+        animation-delay: 1s;
+        animation-duration: 10s;
+      }
+      .falling-leaf:nth-child(3) {
+        left: 30%;
+        animation-delay: 2s;
+        animation-duration: 7s;
+      }
+      .falling-leaf:nth-child(4) {
+        left: 40%;
+        animation-delay: 3s;
+        animation-duration: 9s;
+      }
+      .falling-leaf:nth-child(5) {
+        left: 50%;
+        animation-delay: 4s;
+        animation-duration: 6s;
+      }
+      .falling-leaf:nth-child(6) {
+        left: 60%;
+        animation-delay: 5s;
+        animation-duration: 8s;
+      }
+      .falling-leaf:nth-child(7) {
+        left: 70%;
+        animation-delay: 6s;
+        animation-duration: 11s;
+      }
+      .falling-leaf:nth-child(8) {
+        left: 80%;
+        animation-delay: 7s;
+        animation-duration: 9s;
+      }
+      .falling-leaf:nth-child(9) {
+        left: 90%;
+        animation-delay: 8s;
+        animation-duration: 7s;
+      }
+
+      @keyframes leaf-fall {
+        0% {
+          transform: translateY(-100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.7;
+          transform: translateY(100vh) rotate(360deg);
+        }
+        100% {
+          transform: translateY(120vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Floating particles */
+      .japanese-particle {
+        position: fixed;
+        width: 3px;
+        height: 3px;
+        background: rgba(134, 85, 68, 0.4);
+        border-radius: 50%;
+        z-index: 1;
+        pointer-events: none;
+        animation: particle-drift 15s infinite linear;
+      }
+
+      .japanese-particle:nth-child(1) {
+        left: 5%;
+        animation-delay: 0s;
+      }
+      .japanese-particle:nth-child(2) {
+        left: 15%;
+        animation-delay: 3s;
+      }
+      .japanese-particle:nth-child(3) {
+        left: 25%;
+        animation-delay: 6s;
+      }
+      .japanese-particle:nth-child(4) {
+        left: 35%;
+        animation-delay: 9s;
+      }
+      .japanese-particle:nth-child(5) {
+        left: 45%;
+        animation-delay: 12s;
+      }
+      .japanese-particle:nth-child(6) {
+        left: 55%;
+        animation-delay: 2s;
+      }
+      .japanese-particle:nth-child(7) {
+        left: 65%;
+        animation-delay: 5s;
+      }
+      .japanese-particle:nth-child(8) {
+        left: 75%;
+        animation-delay: 8s;
+      }
+      .japanese-particle:nth-child(9) {
+        left: 85%;
+        animation-delay: 11s;
+      }
+      .japanese-particle:nth-child(10) {
+        left: 95%;
+        animation-delay: 14s;
+      }
+
+      @keyframes particle-drift {
+        0% {
+          transform: translateY(100vh) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.4;
+          transform: translateY(90vh) scale(1);
+        }
+        90% {
+          opacity: 0.4;
+          transform: translateY(-10vh) scale(1);
+        }
+        100% {
+          transform: translateY(-20vh) scale(0);
+          opacity: 0;
+        }
+      }
+
+      /* Gentle breeze effect */
+      .breeze-effect {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(134, 85, 68, 0.02) 0%,
+          transparent 25%,
+          rgba(107, 67, 54, 0.02) 50%,
+          transparent 75%,
+          rgba(134, 85, 68, 0.02) 100%
+        );
+        animation: breeze 12s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      @keyframes breeze {
+        0%,
+        100% {
+          transform: translateX(0px) skewX(0deg);
+        }
+        25% {
+          transform: translateX(5px) skewX(0.5deg);
+        }
+        50% {
+          transform: translateX(0px) skewX(0deg);
+        }
+        75% {
+          transform: translateX(-5px) skewX(-0.5deg);
+        }
+      }
+
+      /* Content should be above animations */
+      .content-layer {
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Mobile text handling */
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Mobile touch improvements */
+      @media (max-width: 640px) {
+        .minimal-card {
+          touch-action: manipulation;
+        }
+
+        button {
+          min-height: 44px;
+          touch-action: manipulation;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-primary-50">
+    <!-- Autumn Animation Background -->
+    <div class="breeze-effect"></div>
+
+    <!-- Falling Leaves -->
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+    <div class="falling-leaf"></div>
+
+    <!-- Japanese Particles -->
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+    <div class="japanese-particle"></div>
+
+    <!-- Header / ชื่อร้าน -->
+    <header
+      class="content-layer sticky top-0 z-20 backdrop-blur bg-[#faf5e0] border-b border-secondary-200"
+    >
+      <div
+        class="max-w-6xl mx-auto px-2 sm:px-4 py-3 sm:py-6 flex flex-row items-center justify-between gap-2 sm:gap-4 bg-[#faf5e0]"
+      >
+        <div class="text-3xl font-light tracking-wide flex-shrink-0">
+          <img
+            src="/logo.PNG"
+            alt="Nonggun Café"
+            class="h-20 sm:h-20 md:h-24 lg:h-28"
+          />
+        </div>
+
+        <!-- Sort Buttons -->
+        <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0 mr-8">
+          <button
+            id="filter-all"
+            onclick="filterMenu('ทั้งหมด')"
+            class="px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 transition-colors font-medium text-[10px] sm:text-sm shadow-md whitespace-nowrap"
+          >
+            ทั้งหมด
+          </button>
+          <button
+            id="filter-drinks"
+            onclick="filterMenu('เครื่องดื่ม')"
+            class="px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap"
+          >
+            เครื่องดื่ม
+          </button>
+          <button
+            id="filter-desserts"
+            onclick="filterMenu('ของหวาน')"
+            class="px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap"
+          >
+            ของหวาน
+          </button>
+        </div>
+
+        <button
+          onclick="openCart()"
+          class="relative bg-secondary-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-2xl hover:bg-secondary-600 transition-colors font-medium text-[10px] sm:text-sm shadow-lg flex-shrink-0"
+        >
+          <svg
+            class="w-3 h-3 sm:w-5 sm:h-5 inline mr-0.5 sm:mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 7h12l-1 12H7L6 7z" />
+              <path d="M9 7V6a3 3 0 0 1 6 0v1" />
+            </svg>
+          </svg>
+          <span class="hidden sm:inline">ถุง</span>
+          <span
+            id="cartCount"
+            class="absolute -top-0.5 -right-0.5 sm:-top-2 sm:-right-2 bg-secondary-400 text-white text-[10px] sm:text-xs rounded-full w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center hidden"
+            >0</span
+          >
+        </button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main
+      class="content-layer max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-12 flex justify-center"
+    >
+      <!-- Grid เมนู - Updated for iPad 3 columns -->
+      <div
+        id="menuGrid"
+        class="grid grid-cols-2 md:w-[40rem] lg:w-[60rem] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6"
+      ></div>
+    </main>
+
+    <!-- Toast (prototype) -->
+    <div
+      id="toast"
+      class="fixed bottom-4 left-1/2 -translate-x-1/2 hidden bg-secondary-800 text-white px-6 py-3 rounded-2xl shadow-card-hover z-30"
+    ></div>
+
+    <!-- Cart Modal -->
+    <div
+      id="cartModal"
+      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-3xl max-w-md w-full max-h-[80vh] overflow-hidden shadow-card-hover"
+      >
+        <div class="p-6 border-b border-secondary-100">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-medium text-secondary-900">ตะกร้าสินค้า</h2>
+            <button
+              onclick="closeCart()"
+              class="text-secondary-400 hover:text-secondary-600 transition-colors"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="cartItems" class="p-6 max-h-96 overflow-y-auto">
+          <!-- Cart items will be rendered here -->
+        </div>
+        <div class="p-6 border-t border-secondary-100 bg-secondary-50">
+          <!-- Discount Code Section -->
+          <div class="mb-4">
+            <div class="flex gap-2 mb-2">
+              <input
+                type="text"
+                id="discountCode"
+                placeholder="ใส่โค้ดส่วนลด"
+                class="flex-1 px-3 py-2 border border-secondary-200 rounded-xl text-sm focus:outline-none focus:border-secondary-400"
+                onkeypress="if(event.key==='Enter') applyDiscount()"
+              />
+              <button
+                onclick="applyDiscount()"
+                class="px-4 py-2 bg-secondary-400 text-white rounded-xl hover:bg-secondary-500 transition-colors text-sm font-medium"
+              >
+                ใช้
+              </button>
+            </div>
+            <div
+              id="discountMessage"
+              class="text-xs text-secondary-600 hidden"
+            ></div>
+          </div>
+
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-secondary-700">ราคารวม</span>
+            <span id="subtotal" class="text-sm text-secondary-700">฿0</span>
+          </div>
+          <div
+            class="flex items-center justify-between mb-2"
+            id="discountRow"
+            style="display: none"
+          >
+            <span class="text-sm text-secondary-700">ส่วนลด</span>
+            <span id="discountAmount" class="text-sm text-green-600">-฿0</span>
+          </div>
+          <div
+            class="flex items-center justify-between mb-4 border-t border-secondary-200 pt-2"
+          >
+            <span class="text-lg font-medium text-secondary-900"
+              >รวมทั้งหมด</span
+            >
+            <span id="cartTotal" class="text-xl font-bold text-secondary-700"
+              >฿0</span
+            >
+          </div>
+          <button
+            onclick="confirmOrder()"
+            class="w-full bg-secondary-500 text-white py-3 rounded-2xl hover:bg-secondary-600 transition-colors font-medium"
+          >
+            สั่งซื้อ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ====== ข้อมูลเมนู (เก็บไว้ในไฟล์นี้) ======
+      // ภาพใช้แหล่งสาธารณะ (Unsplash) เพื่อความสะดวกในการเดโม
+      // คุณสามารถเปลี่ยนลิงก์ภาพ/ชื่อ/ราคาได้ตามต้องการ
+      const MENU = [
+        {
+          id: "tiramisu-cake",
+          name: "Tiramisu Cake",
+          price: 65,
+          category: "ของหวาน",
+          image:
+            "https://i.pinimg.com/736x/4c/2c/79/4c2c79f982639fc1eed0466c754055bf.jpg",
+        },
+        {
+          id: "croissant",
+          name: "Croissant",
+          price: 40,
+          category: "ของหวาน",
+          image:
+            "https://i.pinimg.com/736x/92/ea/6a/92ea6aadb018259547f9c939dfb1c9fb.jpg",
+        },
+        {
+          id: "strawberry-shortcake",
+          name: "Strawberry Shortcake",
+          price: 50,
+          category: "ของหวาน",
+          image:
+            "https://i.pinimg.com/736x/d8/5d/19/d85d195719b4c0cca08f8024c2410511.jpg",
+        },
+        {
+          id: "matcha-cake",
+          name: "Matcha Cake",
+          price: 55,
+          category: "ของหวาน",
+          image:
+            "https://i.pinimg.com/736x/aa/e8/66/aae8661f25986d2105897fe15f57d542.jpg",
+        },
+        {
+          id: "choco-chip-cookies",
+          name: "Choco Chip Cookies",
+          price: 35,
+          category: "ของหวาน",
+          image:
+            "https://i.pinimg.com/736x/dd/eb/7b/ddeb7bab51315d2b3b440d22d2986c36.jpg",
+        },
+        {
+          id: "milk-tea",
+          name: "Milk Tea",
+          price: 35,
+          category: "เครื่องดื่ม",
+          image:
+            "https://i.pinimg.com/1200x/e1/92/97/e192974918b4973141382e055118987b.jpg",
+        },
+        {
+          id: "cappuccino",
+          name: "Cappuccino",
+          price: 50,
+          category: "เครื่องดื่ม",
+          image:
+            "https://i.pinimg.com/1200x/71/4a/0e/714a0ebc8380815fa250efa145be0b00.jpg",
+        },
+        {
+          id: "black-coffee",
+          name: "Black Coffee",
+          price: 60,
+          category: "เครื่องดื่ม",
+          image:
+            "https://i.pinimg.com/1200x/cb/48/db/cb48db04009801523739569e0f33cfc3.jpg",
+        },
+        {
+          id: "strawberry-smoothie",
+          name: "Strawberry Smoothie",
+          price: 45,
+          category: "เครื่องดื่ม",
+          image:
+            "https://i.pinimg.com/1200x/75/16/86/751686f10341eda2aa7baf351be10079.jpg",
+        },
+        {
+          id: "matcha-latte",
+          name: "Matcha Latte",
+          price: 70,
+          category: "เครื่องดื่ม",
+          image:
+            "https://i.pinimg.com/736x/9c/82/72/9c827289a957fc006822cd0ff4194517.jpg",
+        },
+        {
+          id: "iced-latte",
+          name: "Iced Latte",
+          price: 50,
+          category: "เครื่องดื่ม",
+          image:
+            "https://i.pinimg.com/736x/cc/32/48/cc32481f44aedc6161f4514aa51e86ed.jpg",
+        },
+      ];
+
+      // ====== Cart State Management ======
+      let cart = [];
+      let appliedDiscount = null;
+
+      // ====== Sort State Management ======
+      let currentFilter = "ทั้งหมด";
+
+      // ====== Discount Codes ======
+      const DISCOUNT_CODES = {
+        halloween68: {
+          name: "Halloween Special",
+          discount: 0.05, // 5%
+          type: "percentage",
+        },
+        hellonewmonth: {
+          name: "Hello New Month",
+          discount: 0.05, // 5%
+          type: "percentage",
+        },
+      };
+
+      // ====== render cards ======
+      const grid = document.getElementById("menuGrid");
+
+      function money(n) {
+        return new Intl.NumberFormat("th-TH", {
+          style: "currency",
+          currency: "THB",
+          maximumFractionDigits: 0,
+        }).format(n);
+      }
+
+      function renderMenu(filteredMenu = null) {
+        const menuToRender = filteredMenu || MENU;
+        const html = menuToRender
+          .map(
+            (item) => `
+           <article class="bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl overflow-hidden shadow-card border border-secondary-100 minimal-card hover:shadow-card-hover">
+             <div class="aspect-[4/3] w-full overflow-hidden relative">
+               <img src="${item.image}" alt="${
+              item.name
+            }" class="w-full h-full object-cover img-skeleton" onload="this.classList.remove('img-skeleton')" />
+               <div class="absolute top-2 right-2 sm:top-2 sm:right-2 md:top-1.5 md:right-1.5 bg-white text-secondary-500 px-1.5 sm:px-2 md:px-1.5 py-0.5 sm:py-1 md:py-0.5 rounded-md sm:rounded-lg md:rounded-md text-[10px] font-medium">
+                 ${item.category}
+               </div>
+             </div>
+             <div class="p-3 sm:p-5 md:p-3">
+               <h3 class="font-medium text-sm sm:text-lg md:text-sm text-secondary-900 mb-1 line-clamp-2">${
+                 item.name
+               }</h3>
+               <div class="text-secondary-600 font-medium text-sm sm:text-base md:text-sm mb-3 sm:mb-4 md:mb-3">${money(
+                 item.price
+               )}</div>
+               <div class="flex items-center gap-1 sm:gap-2 md:gap-1">
+                 <button class="flex-1 px-2 sm:px-4 md:px-2 py-1.5 sm:py-2.5 md:py-1.5 rounded-xl sm:rounded-2xl md:rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 active:scale-[.98] transition-all font-medium text-xs sm:text-sm md:text-xs" onclick="addToCart('${
+                   item.id
+                 }')">เพิ่มลงตะกร้า</button>
+                 <button class="px-2 sm:px-4 md:px-2 py-1.5 sm:py-2.5 md:py-1.5 rounded-xl sm:rounded-2xl md:rounded-xl border border-secondary-200 hover:bg-secondary-50 text-secondary-700 transition-all font-medium text-xs sm:text-sm md:text-xs" onclick="view('${
+                   item.id
+                 }')">ดู</button>
+               </div>
+             </div>
+           </article>
+         `
+          )
+          .join("");
+        grid.innerHTML = html;
+      }
+
+      // ====== Filter Functions ======
+      function filterMenu(category) {
+        currentFilter = category;
+
+        // Update button states
+        updateFilterButtons();
+
+        // Filter menu items
+        let filteredMenu = MENU;
+        if (category !== "ทั้งหมด") {
+          filteredMenu = MENU.filter((item) => item.category === category);
+        }
+
+        // Render filtered menu
+        renderMenu(filteredMenu);
+      }
+
+      function updateFilterButtons() {
+        // Reset all buttons
+        document.getElementById("filter-all").className =
+          "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap";
+        document.getElementById("filter-drinks").className =
+          "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap";
+        document.getElementById("filter-desserts").className =
+          "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap";
+
+        // Set active button
+        let activeButton;
+        switch (currentFilter) {
+          case "ทั้งหมด":
+            activeButton = document.getElementById("filter-all");
+            break;
+          case "เครื่องดื่ม":
+            activeButton = document.getElementById("filter-drinks");
+            break;
+          case "ของหวาน":
+            activeButton = document.getElementById("filter-desserts");
+            break;
+        }
+
+        if (activeButton) {
+          activeButton.className =
+            "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 transition-colors font-medium text-[10px] sm:text-sm shadow-md whitespace-nowrap";
+        }
+      }
+
+      // ====== Cart Functions ======
+      function addToCart(id) {
+        const item = MENU.find((m) => m.id === id);
+        if (!item) return;
+
+        const existingItem = cart.find((c) => c.id === id);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ ...item, quantity: 1 });
+        }
+
+        updateCartUI();
+        showToast(`เพิ่ม "${item.name}" ลงตะกร้าแล้ว`);
+      }
+
+      function removeFromCart(id) {
+        cart = cart.filter((item) => item.id !== id);
+        updateCartUI();
+      }
+
+      function updateQuantity(id, newQuantity) {
+        if (newQuantity <= 0) {
+          removeFromCart(id);
+          return;
+        }
+
+        const item = cart.find((c) => c.id === id);
+        if (item) {
+          item.quantity = newQuantity;
+          updateCartUI();
+        }
+      }
+
+      function updateCartUI() {
+        const cartCount = document.getElementById("cartCount");
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+        if (totalItems > 0) {
+          cartCount.textContent = totalItems;
+          cartCount.classList.remove("hidden");
+        } else {
+          cartCount.classList.add("hidden");
+        }
+
+        renderCartItems();
+        updateCartTotal();
+      }
+
+      function renderCartItems() {
+        const cartItems = document.getElementById("cartItems");
+
+        if (cart.length === 0) {
+          cartItems.innerHTML = `
+                 <div class="text-center py-8 text-secondary-500">
+                     <svg class="w-16 h-16 mx-auto mb-4 text-secondary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+   <path d="M6 7h12l-1 12H7L6 7z"/>
+   <path d="M9 7V6a3 3 0 0 1 6 0v1"/>
+ </svg>
+                     </svg>
+                     <p class="text-lg font-medium">ตะกร้าว่างเปล่า</p>
+                     <p class="text-sm">เพิ่มสินค้าลงตะกร้าเพื่อเริ่มสั่งซื้อ</p>
+                 </div>
+             `;
+          return;
+        }
+
+        const html = cart
+          .map(
+            (item) => `
+            <div class="flex items-center gap-4 py-4 border-b border-secondary-100 last:border-b-0">
+                <img src="${item.image}" alt="${
+              item.name
+            }" class="w-16 h-16 rounded-2xl object-cover">
+                <div class="flex-1">
+                    <h3 class="font-medium text-secondary-900">${item.name}</h3>
+                    <p class="text-secondary-600 text-sm">${money(
+                      item.price
+                    )}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="updateQuantity('${item.id}', ${
+              item.quantity - 1
+            })" class="w-8 h-8 rounded-full bg-secondary-100 text-secondary-600 hover:bg-secondary-200 transition-colors flex items-center justify-center">-</button>
+                    <span class="w-8 text-center font-medium">${
+                      item.quantity
+                    }</span>
+                    <button onclick="updateQuantity('${item.id}', ${
+              item.quantity + 1
+            })" class="w-8 h-8 rounded-full bg-secondary-100 text-secondary-600 hover:bg-secondary-200 transition-colors flex items-center justify-center">+</button>
+                </div>
+                <button onclick="removeFromCart('${
+                  item.id
+                }')" class="text-secondary-400 hover:text-secondary-600 transition-colors ml-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+            </div>
+        `
+          )
+          .join("");
+
+        cartItems.innerHTML = html;
+      }
+
+      function updateCartTotal() {
+        const subtotal = cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+
+        // Update subtotal display
+        document.getElementById("subtotal").textContent = money(subtotal);
+
+        // Calculate discount
+        let discountAmount = 0;
+        if (appliedDiscount) {
+          if (appliedDiscount.type === "percentage") {
+            discountAmount = subtotal * appliedDiscount.discount;
+          }
+        }
+
+        // Update discount display
+        if (discountAmount > 0) {
+          document.getElementById("discountRow").style.display = "flex";
+          document.getElementById("discountAmount").textContent = `-${money(
+            discountAmount
+          )}`;
+        } else {
+          document.getElementById("discountRow").style.display = "none";
+        }
+
+        // Calculate final total
+        const finalTotal = subtotal - discountAmount;
+        document.getElementById("cartTotal").textContent = money(finalTotal);
+      }
+
+      function applyDiscount() {
+        const codeInput = document.getElementById("discountCode");
+        const code = codeInput.value.toLowerCase().trim();
+        const messageEl = document.getElementById("discountMessage");
+
+        // Clear previous message
+        messageEl.classList.add("hidden");
+
+        if (!code) {
+          showDiscountMessage("กรุณาใส่โค้ดส่วนลด", "error");
+          return;
+        }
+
+        if (DISCOUNT_CODES[code]) {
+          appliedDiscount = DISCOUNT_CODES[code];
+          codeInput.value = "";
+          showDiscountMessage(
+            `ใช้โค้ด "${DISCOUNT_CODES[code].name}" สำเร็จ!`,
+            "success"
+          );
+          updateCartTotal();
+        } else {
+          showDiscountMessage("โค้ดส่วนลดไม่ถูกต้อง", "error");
+        }
+      }
+
+      function showDiscountMessage(message, type) {
+        const messageEl = document.getElementById("discountMessage");
+        messageEl.textContent = message;
+        messageEl.classList.remove("hidden");
+
+        if (type === "success") {
+          messageEl.className = "text-xs text-green-600";
+        } else {
+          messageEl.className = "text-xs text-red-600";
+        }
+
+        // Hide message after 3 seconds
+        setTimeout(() => {
+          messageEl.classList.add("hidden");
+        }, 3000);
+      }
+
+      function openCart() {
+        document.getElementById("cartModal").classList.remove("hidden");
+      }
+
+      function closeCart() {
+        document.getElementById("cartModal").classList.add("hidden");
+      }
+
+      function confirmOrder() {
+        if (cart.length === 0) {
+          showToast("ตะกร้าว่างเปล่า");
+          return;
+        }
+
+        const orderDetails = cart
+          .map(
+            (item) =>
+              `${item.name} x${item.quantity} = ${money(
+                item.price * item.quantity
+              )}`
+          )
+          .join("\n");
+
+        const subtotal = cart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+
+        let discountAmount = 0;
+        if (appliedDiscount) {
+          if (appliedDiscount.type === "percentage") {
+            discountAmount = subtotal * appliedDiscount.discount;
+          }
+        }
+
+        const finalTotal = subtotal - discountAmount;
+
+        let orderSummary = `รายการสั่งซื้อ:\n\n${orderDetails}\n\nราคารวม: ${money(
+          subtotal
+        )}`;
+
+        if (discountAmount > 0) {
+          orderSummary += `\nส่วนลด (${appliedDiscount.name}): -${money(
+            discountAmount
+          )}`;
+        }
+
+        orderSummary += `\nรวมทั้งหมด: ${money(
+          finalTotal
+        )}\n\nขอบคุณสำหรับการสั่งซื้อ!`;
+
+        alert(orderSummary);
+
+        // Clear cart after order
+        cart = [];
+        appliedDiscount = null;
+        document.getElementById("discountCode").value = "";
+        document.getElementById("discountMessage").classList.add("hidden");
+        updateCartUI();
+        closeCart();
+        showToast("สั่งซื้อสำเร็จ!");
+      }
+
+      // ====== actions (prototype only) ======
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.remove("hidden");
+        clearTimeout(showToast._timer);
+        showToast._timer = setTimeout(() => t.classList.add("hidden"), 1600);
+      }
+
+      function view(id) {
+        const item = MENU.find((m) => m.id === id);
+        alert(`${item?.name}\nราคา: ${money(item?.price || 0)}\n\n`);
+      }
+
+      // init
+      updateFilterButtons();
+      renderMenu();
+    </script>
+  </body>
+</html>
