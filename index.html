@@ -90,6 +90,34 @@
         box-shadow: 0 8px 32px rgba(134, 85, 68, 0.15);
       }
 
+      /* Floating Cart Button */
+      .floating-cart {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 30;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* iPad and larger screens - cart button on top right */
+      @media (min-width: 768px) {
+        .floating-cart {
+          top: 1.5rem;
+          bottom: auto;
+          right: 1.5rem;
+        }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+      }
+
+      .floating-cart:hover {
+        animation-play-state: paused;
+        transform: scale(1.05);
+      }
+
       /* Falling Leaves Animation */
       .falling-leaf {
         position: fixed;
@@ -300,6 +328,20 @@
           min-height: 44px;
           touch-action: manipulation;
         }
+
+        .floating-cart {
+          bottom: 1rem;
+          right: 1rem;
+        }
+      }
+
+      /* Tablet and desktop - cart position adjustments */
+      @media (min-width: 768px) {
+        .floating-cart {
+          top: 1rem;
+          bottom: auto;
+          right: 1rem;
+        }
       }
     </style>
   </head>
@@ -331,82 +373,66 @@
     <div class="japanese-particle"></div>
 
     <!-- Header / ชื่อร้าน -->
-    <header
-      class="content-layer sticky top-0 z-20 backdrop-blur bg-[#faf5e0] border-b border-secondary-200"
-    >
-      <div
-        class="max-w-6xl mx-auto px-2 sm:px-4 py-3 sm:py-6 flex flex-row items-center justify-between gap-2 sm:gap-4 bg-[#faf5e0]"
-      >
-        <div class="text-3xl font-light tracking-wide flex-shrink-0">
+    <header class="content-layer top-0 z-20 backdrop-blur bg-[#faf5e0]/95 border-b border-secondary-200 shadow-sm">
+      <div class="max-w-6xl mx-auto px-4 py-4 sm:py-6">
+        <!-- Logo Section -->
+        <div class="flex items-center justify-center mb-4 sm:mb-6">
           <img
             src="https://i.ibb.co/kVQVcrNw/logo.png"
             alt="Nonggun Café"
-            class="h-20 sm:h-20 md:h-24 lg:h-28"
+            class="h-[8rem] sm:h-[8rem] md:h-[10rem] lg:h-[12rem] drop-shadow-sm"
           />
         </div>
-
-        <!-- Sort Buttons -->
-        <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0 mr-8">
+        
+        <!-- Filter Buttons -->
+        <div class="flex items-center justify-center gap-2 sm:gap-3">
           <button
             id="filter-all"
             onclick="filterMenu('ทั้งหมด')"
-            class="px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 transition-colors font-medium text-[10px] sm:text-sm shadow-md whitespace-nowrap"
+            class="px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-secondary-500 text-white hover:bg-secondary-600 transition-all duration-300 font-medium text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
           >
             ทั้งหมด
           </button>
           <button
             id="filter-drinks"
             onclick="filterMenu('เครื่องดื่ม')"
-            class="px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap"
+            class="px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-secondary-300 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-400 transition-all duration-300 font-medium text-sm sm:text-base transform hover:scale-105 active:scale-95"
           >
             เครื่องดื่ม
           </button>
           <button
             id="filter-desserts"
             onclick="filterMenu('ของหวาน')"
-            class="px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap"
+            class="px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-secondary-300 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-400 transition-all duration-300 font-medium text-sm sm:text-base transform hover:scale-105 active:scale-95"
           >
             ของหวาน
           </button>
         </div>
-
-        <button
-          onclick="openCart()"
-          class="relative bg-secondary-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-2xl hover:bg-secondary-600 transition-colors font-medium text-[10px] sm:text-sm shadow-lg flex-shrink-0"
-        >
-          <svg
-            class="w-3 h-3 sm:w-5 sm:h-5 inline mr-0.5 sm:mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M6 7h12l-1 12H7L6 7z" />
-              <path d="M9 7V6a3 3 0 0 1 6 0v1" />
-            </svg>
-          </svg>
-          <span class="hidden sm:inline">ถุง</span>
-          <span
-            id="cartCount"
-            class="absolute -top-0.5 -right-0.5 sm:-top-2 sm:-right-2 bg-secondary-400 text-white text-[10px] sm:text-xs rounded-full w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center hidden"
-            >0</span
-          >
-        </button>
       </div>
     </header>
 
-    <!-- Main -->
-    <main
-      class="content-layer max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-12 flex justify-center"
+    <!-- Floating Cart Button -->
+    <button
+      onclick="openCart()"
+      class="floating-cart bg-secondary-500 text-white p-4 rounded-full shadow-lg shadow-yellow-900/30 hover:bg-secondary-600 transition-all duration-300 group"
     >
+      <svg
+        class="w-6 h-6 group-hover:scale-110 transition-transform duration-200"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path d="M6 7h12l-1 12H7L6 7z" />
+        <path d="M9 7V6a3 3 0 0 1 6 0v1" />
+      </svg>
+      <span
+        id="cartCount"
+        class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center hidden font-bold shadow-lg animate-pulse"
+      >0</span>
+    </button>
+
+    <!-- Main -->
+    <main class="content-layer max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-12 flex justify-center">
       <!-- Grid เมนู - Updated for iPad 3 columns -->
       <div
         id="menuGrid"
@@ -423,20 +449,22 @@
     <!-- Cart Modal -->
     <div
       id="cartModal"
-      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4"
+      class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-2 sm:p-4"
     >
       <div
-        class="bg-white rounded-3xl max-w-md w-full max-h-[80vh] overflow-hidden shadow-card-hover"
+        class="bg-white rounded-2xl sm:rounded-3xl w-full max-w-md flex flex-col shadow-card-hover"
+        style="height: calc(100vh - 1rem); max-height: min(600px, calc(100vh - 1rem));"
       >
-        <div class="p-6 border-b border-secondary-100">
+        <!-- Header - Fixed -->
+        <div class="flex-shrink-0 p-4 sm:p-6 border-b border-secondary-100">
           <div class="flex items-center justify-between">
-            <h2 class="text-xl font-medium text-secondary-900">ตะกร้าสินค้า</h2>
+            <h2 class="text-lg sm:text-xl font-medium text-secondary-900">ตะกร้าสินค้า</h2>
             <button
               onclick="closeCart()"
-              class="text-secondary-400 hover:text-secondary-600 transition-colors"
+              class="text-secondary-400 hover:text-secondary-600 transition-colors p-1"
             >
               <svg
-                class="w-6 h-6"
+                class="w-5 h-5 sm:w-6 sm:h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -451,10 +479,18 @@
             </button>
           </div>
         </div>
-        <div id="cartItems" class="p-6 max-h-96 overflow-y-auto">
+
+        <!-- Cart Items - Scrollable -->
+        <div id="cartItems" class="flex-1 p-4 sm:p-6 overflow-y-auto min-h-0">
           <!-- Cart items will be rendered here -->
+          <div class="text-center text-secondary-500 py-8">
+            <div class="text-4xl mb-2">🛒</div>
+            <p>ตะกร้าสินค้าว่าง</p>
+          </div>
         </div>
-        <div class="p-6 border-t border-secondary-100 bg-secondary-50">
+
+        <!-- Footer - Fixed -->
+        <div class="flex-shrink-0 p-4 sm:p-6 border-t border-secondary-100 bg-secondary-50">
           <!-- Discount Code Section -->
           <div class="mb-4">
             <div class="flex gap-2 mb-2">
@@ -462,12 +498,12 @@
                 type="text"
                 id="discountCode"
                 placeholder="ใส่โค้ดส่วนลด"
-                class="flex-1 px-3 py-2 border border-secondary-200 rounded-xl text-sm focus:outline-none focus:border-secondary-400"
+                class="flex-1 px-3 py-2 border border-secondary-200 rounded-lg sm:rounded-xl text-sm focus:outline-none focus:border-secondary-400 min-w-0"
                 onkeypress="if(event.key==='Enter') applyDiscount()"
               />
               <button
                 onclick="applyDiscount()"
-                class="px-4 py-2 bg-secondary-400 text-white rounded-xl hover:bg-secondary-500 transition-colors text-sm font-medium"
+                class="px-3 sm:px-4 py-2 bg-secondary-400 text-white rounded-lg sm:rounded-xl hover:bg-secondary-500 transition-colors text-sm font-medium flex-shrink-0"
               >
                 ใช้
               </button>
@@ -478,31 +514,30 @@
             ></div>
           </div>
 
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-sm text-secondary-700">ราคารวม</span>
-            <span id="subtotal" class="text-sm text-secondary-700">฿0</span>
-          </div>
-          <div
-            class="flex items-center justify-between mb-2"
-            id="discountRow"
-            style="display: none"
-          >
-            <span class="text-sm text-secondary-700">ส่วนลด</span>
-            <span id="discountAmount" class="text-sm text-green-600">-฿0</span>
-          </div>
-          <div
-            class="flex items-center justify-between mb-4 border-t border-secondary-200 pt-2"
-          >
-            <span class="text-lg font-medium text-secondary-900"
-              >รวมทั้งหมด</span
+          <!-- Price Summary -->
+          <div class="space-y-2 mb-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-secondary-700">ราคารวม</span>
+              <span id="subtotal" class="text-sm text-secondary-700">฿0</span>
+            </div>
+            <div
+              class="flex items-center justify-between"
+              id="discountRow"
+              style="display: none"
             >
-            <span id="cartTotal" class="text-xl font-bold text-secondary-700"
-              >฿0</span
-            >
+              <span class="text-sm text-secondary-700">ส่วนลด</span>
+              <span id="discountAmount" class="text-sm text-green-600">-฿0</span>
+            </div>
+            <div class="flex items-center justify-between border-t border-secondary-200 pt-2">
+              <span class="text-base sm:text-lg font-medium text-secondary-900">รวมทั้งหมด</span>
+              <span id="cartTotal" class="text-lg sm:text-xl font-bold text-secondary-700">฿0</span>
+            </div>
           </div>
+
+          <!-- Order Button -->
           <button
             onclick="confirmOrder()"
-            class="w-full bg-secondary-500 text-white py-3 rounded-2xl hover:bg-secondary-600 transition-colors font-medium"
+            class="w-full bg-secondary-500 text-white py-3 rounded-xl sm:rounded-2xl hover:bg-secondary-600 transition-colors font-medium text-base touch-manipulation"
           >
             สั่งซื้อ
           </button>
@@ -694,11 +729,11 @@
       function updateFilterButtons() {
         // Reset all buttons
         document.getElementById("filter-all").className =
-          "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap";
+          "px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-secondary-300 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-400 transition-all duration-300 font-medium text-sm sm:text-base transform hover:scale-105 active:scale-95";
         document.getElementById("filter-drinks").className =
-          "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap";
+          "px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-secondary-300 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-400 transition-all duration-300 font-medium text-sm sm:text-base transform hover:scale-105 active:scale-95";
         document.getElementById("filter-desserts").className =
-          "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-secondary-300 text-secondary-700 hover:bg-secondary-50 transition-colors font-medium text-[10px] sm:text-sm whitespace-nowrap";
+          "px-4 sm:px-6 py-2 sm:py-3 rounded-full border-2 border-secondary-300 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-400 transition-all duration-300 font-medium text-sm sm:text-base transform hover:scale-105 active:scale-95";
 
         // Set active button
         let activeButton;
@@ -716,7 +751,7 @@
 
         if (activeButton) {
           activeButton.className =
-            "px-1.5 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-secondary-500 text-white hover:bg-secondary-600 transition-colors font-medium text-[10px] sm:text-sm shadow-md whitespace-nowrap";
+            "px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-secondary-500 text-white hover:bg-secondary-600 transition-all duration-300 font-medium text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95";
         }
       }
 
@@ -776,12 +811,8 @@
           cartItems.innerHTML = `
                  <div class="text-center py-8 text-secondary-500">
                      <svg class="w-16 h-16 mx-auto mb-4 text-secondary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                         <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-   <path d="M6 7h12l-1 12H7L6 7z"/>
-   <path d="M9 7V6a3 3 0 0 1 6 0v1"/>
- </svg>
+                         <path d="M6 7h12l-1 12H7L6 7z"/>
+                         <path d="M9 7V6a3 3 0 0 1 6 0v1"/>
                      </svg>
                      <p class="text-lg font-medium">ตะกร้าว่างเปล่า</p>
                      <p class="text-sm">เพิ่มสินค้าลงตะกร้าเพื่อเริ่มสั่งซื้อ</p>
